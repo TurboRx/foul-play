@@ -283,7 +283,10 @@ async def start_standard_battle(
 
         if battle.battle_type == BattleType.BATTLE_FACTORY:
             battle.battle_type = BattleType.BATTLE_FACTORY
-            tier_name = extract_battle_factory_tier_from_msg(msg)
+            if "1v1" in pokemon_battle_type:
+                tier_name = "1v1"
+            else:
+                tier_name = extract_battle_factory_tier_from_msg(msg)
             logger.info("Battle Factory Tier: {}".format(tier_name))
             TeamDatasets.initialize(
                 pokemon_battle_type,
