@@ -1,5 +1,6 @@
 import unittest
 
+import constants
 from data.pkmn_sets import (
     TeamDatasets,
     SmogonSets,
@@ -139,7 +140,7 @@ class TestPredictSet(unittest.TestCase):
 
         pkmn = Pokemon("primarina", 100)
         pkmn.ability = None
-        pkmn.item = "unknownitem"
+        pkmn.item = constants.UNKNOWN_ITEM
 
         all_sets = TeamDatasets.get_all_remaining_sets(pkmn)
         self.assertGreater(len(all_sets), 0)
@@ -151,7 +152,7 @@ class TestPredictSet(unittest.TestCase):
 
         pkmn = Pokemon("primarina", 100)
         pkmn.ability = "torrent"
-        pkmn.item = "unknownitem"
+        pkmn.item = constants.UNKNOWN_ITEM
 
         all_sets = TeamDatasets.get_all_remaining_sets(pkmn)
         any_set_has_torrent = any(
