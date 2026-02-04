@@ -146,25 +146,34 @@ class TestPredictSet(unittest.TestCase):
 
     def test_gen91v1factory_omits_impossible_ability(self):
         TeamDatasets.initialize(
-            "gen91v1factory", {"ursaluna"}, battle_factory_tier_name="1v1"
+            "gen91v1factory", {"primarina"}, battle_factory_tier_name="1v1"
         )
 
-        pkmn = Pokemon("ursaluna", 100)
-        pkmn.ability = None
+        pkmn = Pokemon("primarina", 100)
+        pkmn.ability = "torrent"
+        pkmn.item = "unknownitem"
 
         all_sets = TeamDatasets.get_all_remaining_sets(pkmn)
-        any_set_has_guts = any(
-            set_.pkmn_set.ability == "guts" for set_ in all_sets
+        any_set_has_torrent = any(
+            set_.pkmn_set.ability == "torrent" for set_ in all_sets
         )
-        self.assertTrue(any_set_has_guts)
+        any_set_has_liquidvoice = any(
+            set_.pkmn_set.ability == "liquidvoice" for set_ in all_sets
+        )
+        self.assertTrue(any_set_has_torrent)
+        self.assertFalse(any_set_has_liquidvoice)
 
-        pkmn.impossible_abilities.add("guts")
+        pkmn.ability = "liquidvoice"
 
         all_sets = TeamDatasets.get_all_remaining_sets(pkmn)
-        any_set_has_guts = any(
-            set_.pkmn_set.ability == "guts" for set_ in all_sets
+        any_set_has_torrent = any(
+            set_.pkmn_set.ability == "torrent" for set_ in all_sets
         )
-        self.assertFalse(any_set_has_guts)
+        any_set_has_liquidvoice = any(
+            set_.pkmn_set.ability == "liquidvoice" for set_ in all_sets
+        )
+        self.assertFalse(any_set_has_torrent)
+        self.assertTrue(any_set_has_liquidvoice)
 
     def test_allows_impossible_ability_when_predicting_set_if_ability_is_explicitly_set(
         self,

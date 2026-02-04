@@ -218,7 +218,7 @@ async def start_standard_battle(
 ):
     battle, msg = await start_battle_common(ps_websocket_client, pokemon_battle_type)
     battle.user.team_dict = team_dict
-    if "battlefactory" in pokemon_battle_type:
+    if "factory" in pokemon_battle_type:
         battle.battle_type = BattleType.BATTLE_FACTORY
     else:
         battle.battle_type = BattleType.STANDARD_BATTLE
